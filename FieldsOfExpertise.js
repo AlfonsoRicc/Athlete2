@@ -10,25 +10,46 @@ const FieldsOfExpertise = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
 
-  const categories = [ { id: 'macro', name: 'Macro' },
-  { id: 'financial_analysis', name: 'Financial Analysis' },
-  { id: 'tech', name: 'Tech'  },
-  { id: 'crypto', name: 'Crypto' }, 
-  { id: 'EM', name: 'EM' }, 
-  { id: 'commodities', name: 'Commodities' }, 
-  { id: 'bottom-up', name: 'Bottom Up' }, 
-  { id: 'risk', name: 'Risk Management' },
-  { id: 'corporate_finance', name: 'Corporate Finance'},
-  { id: 'alternatives', name: 'Alts' },
+  const categories = [ { id: 'archery', name: 'Archery' },
+  { id: 'soccer', name: 'Soccer(Football)' },
+  { id: 'tennis', name: 'Tennis'  },
+  { id: 'baseball', name: 'Baseball' }, 
+  { id: 'golf', name: 'Golf' }, 
+  { id: 'swimming', name: 'Swimming' }, 
+  { id: 'track_and_field', name: 'Track & Field' }, 
+  { id: 'volleyball', name: 'Volleyball' },
+  { id: 'rugby', name: 'Rugby'},
+  { id: 'cricket', name: 'Cricket' },
+  { id: 'hockey', name: 'Hockey' },
+  { id: 'martial_arts', name: 'Martial Arts' },
+  { id: 'boxing', name: 'Boxing' },
+  { id: 'skateboarding', name: 'Skateboarding' },
+  { id: 'skiing', name: 'Skiing' },
+  { id: 'snowboarding', name: 'Snowboarding' },
+  { id: 'surfing', name: 'Surfing'},
+  { id: 'equestrian_sports', name: 'Equestrian Sports' },
   ];
 
-  const handleContinuePress = () => {navigation.navigate('WorkHistory')};
+  const handleContinuePress = () => {
+    if (selectedCategories.length > 0) {navigation.navigate('WorkHistory');
+  } else {
+    alert('Please select at least one field of expertise.');
+  }
+};
+
 
   const handleSelectCategory = (category) => {
+    if (selectedCategories.includes(category)) { 
+      setSelectedCategories(selectedCategories.filter(c => c.id !== category.id));
+    } else {
+      setSelectedCategories([...selectedCategories, category]);
+    }
   };
 
   const handleRemoveCategory = (category) => {
+    setSelectedCategories(selectedCategories.filter(c => c.id !== category.id));
   };
+
 
   const renderItem = ({ item }) => {
     const isSelected = selectedCategories.some(c => c.id === item.id);
@@ -51,14 +72,14 @@ return (
 <View style={styles.container}>
 <View style={styles.topBar}>
   <Image 
-    source={require('./assets/logo.png')}
+    source={require('./assets/AthleteLogo.png')}
     style={styles.logo}
   /> 
 </View>
     <ProgressBar steps={steps} currentStep={currentStep} />
      <Text style={styles.step1}>STEP 1</Text>
       <View style={styles.textWrapper}>
-          <Text style={styles.textPrimary}>What are your fields of expertise? </Text>
+          <Text style={styles.textPrimary}>Pick three sports you love </Text>
           <Text style={styles.subtitle}>Choose up to three topics where you believe you can be helpful to the community</Text>
   </View>
     <TextInput
@@ -76,7 +97,7 @@ return (
       numColumns={2} 
       style={styles.list}
     />
-      <TouchableOpacity style={styles.button} onPress={handleContinuePress}>
+      <TouchableOpacity style={[styles.button, selectedCategories.length === 0 && styles.buttonDisabled]} onPress={handleContinuePress} disabled={selectedCategories.length === 0}>
         <Text style={styles.buttonText}>Continue</Text>
       </TouchableOpacity>
     </View>
@@ -86,7 +107,7 @@ return (
 const styles = StyleSheet.create({
   container: {
       flex: 1,
-      backgroundColor: '#171C24',
+      backgroundColor: '#D4CCC1',
       alignItems: 'center',
       justifyContent: 'flex-start',
       paddingTop: 10,
@@ -95,9 +116,8 @@ const styles = StyleSheet.create({
     topBar: {
       width: '100%', 
       paddingVertical: 10, 
-      backgroundColor: '#171C24', 
+      backgroundColor: '#D4CCC1', 
       alignItems: 'left', 
-      marginLeft: 40,
     },
     logo: {
       width: 100, 
@@ -138,7 +158,7 @@ const styles = StyleSheet.create({
       width: '100%',
     },
     item: {
-      backgroundColor: '#8FA3C8',
+      backgroundColor: '#fff',
       padding: 10,
       marginVertical: 4,
       marginHorizontal: 4,
@@ -146,21 +166,24 @@ const styles = StyleSheet.create({
       borderRadius: 5,
     },
     itemSelected: {
-      backgroundColor: '#000',
-      padding: 20,
-      marginVertical: 8,
-      marginHorizontal: 16,
+      backgroundColor: '#DD0000',
+      padding: 10,
+      marginVertical: 4,
+      marginHorizontal: 4,
+      width: '35%',
+      borderRadius: 5,
     },
     itemText: {
       fontSize: 10,
     },
     itemRemoveText: {
-      fontSize: 18,
-      color: 'red',
+      fontSize: 14,
+      color: '#333333',
+      textAlign: 'right',
     },
     button: {
       marginTop: 20, 
-      backgroundColor: '#8FA3C8', 
+      backgroundColor: '#DD0000', 
       padding: 10,
       borderRadius: 5,
       width: '80%', 
@@ -169,8 +192,13 @@ const styles = StyleSheet.create({
       bottom: 50, 
       alignSelf: 'center',  
     },
+    buttonDisabled: {
+      backgroundColor: '#FFFFFF', // Disabled button color
+      borderColor: 'grey',
+      borderWidth: 1
+    },
     buttonText: {
-      color: '#171C24', 
+      color: '#333333', 
       fontSize: 16, 
       fontWeight: 'bold',
     },

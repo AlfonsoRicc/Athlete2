@@ -20,7 +20,7 @@ const CustomButton = ({ title, onPress, navigateTo }) => {
 const styles = StyleSheet.create({
   button: {
     width: '90%',
-    backgroundColor: '#54D7B7',
+    backgroundColor: '#D4CCC1',
     paddingVertical: 12,
     paddingHorizontal: 25,
     borderRadius: 4,
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   text: {
-    color: '#171C24',
+    color: '#333333',
     fontSize: 16,
     fontWeight: 'bold',
   },

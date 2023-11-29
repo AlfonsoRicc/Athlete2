@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Image, Text, TextInput, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
+import { View, Image, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import ProgressBar from './ProgressBar';
 
@@ -11,27 +11,11 @@ const PersonalInfo = () => {
   const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [bio, setBio] = useState('');
+    const [image, setImage] = useState(null);
 
-  const handleContinuePress = () => {navigation.navigate('')};
-
-  const renderItem = ({ item }) => {
-    const isSelected = selectedCategories.some(c => c.id === item.id);
-    return (
-      <TouchableOpacity
-        style={isSelected ? styles.itemSelected : styles.item}
-        onPress={() => handleSelectCategory(item)}>
-        <Text style={styles.itemText}>{item.name}</Text>
-        {isSelected && (
-          <TouchableOpacity onPress={() => handleRemoveCategory(item)}>
-            <Text style={styles.itemRemoveText}>X</Text>
-          </TouchableOpacity>
-        )}
-      </TouchableOpacity>
-    );
-  };
+  const handleContinuePress = () => {navigation.navigate('Verification')};
 
   const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
@@ -49,17 +33,20 @@ return (
 <View style={styles.container}>
 <View style={styles.topBar}>
   <Image 
-    source={require('./assets/logo.png')}
+    source={require('./assets/AthleteLogo.png')}
     style={styles.logo}
   /> 
 </View>
     <ProgressBar steps={steps} currentStep={currentStep} />
      <Text style={styles.step1}>STEP 3</Text>
       <View style={styles.textWrapper}>
-          <Text style={styles.textPrimary}>Share Some Info About Yourself</Text>
+          <Text style={styles.textPrimary}>Share Something About Yourself</Text>
   </View>
   <View style={styles.imagePlaceholder}>
-        {/* Implement image upload logic here */}
+  <TouchableOpacity onPress={pickImage}>
+          <Text>Upload Image</Text>
+        </TouchableOpacity>
+        {image && <Image source={{ uri: image }} style={{ width : 100, height: 100 }} />}
       </View>
       <TextInput 
         style={styles.input}
@@ -77,7 +64,7 @@ return (
         style={styles.inputLarge}
         value={bio}
         onChangeText={setBio}
-        placeholder="Bio (optional)"
+        placeholder="Significant work experiences (optional)"
         multiline
       />
       <TouchableOpacity style={styles.button} onPress={handleContinuePress}>
@@ -90,7 +77,7 @@ return (
 const styles = StyleSheet.create({
   container: {
       flex: 1,
-      backgroundColor: '#171C24',
+      backgroundColor: '#D4CCC1',
       alignItems: 'center',
       justifyContent: 'flex-start',
       paddingTop: 10,
@@ -98,18 +85,19 @@ const styles = StyleSheet.create({
     },
     topBar: {
       width: '100%', 
-      paddingVertical: 10, 
-      backgroundColor: '#171C24', 
+      backgroundColor: '#D4CCC1', 
       alignItems: 'left', 
-      marginLeft: 40,
     },
     logo: {
-      width: 100, 
-      height: 50, 
+      width: 200, 
+      height: 100, 
       resizeMode: 'contain', 
     },
     textWrapper: {
       width: "80%",
+    },
+    placeholder: {
+      color: "#FFFFFF"
     },
     textPrimary: {
       fontSize: 20,
@@ -118,24 +106,38 @@ const styles = StyleSheet.create({
       textAlign: 'center',
     },
     imagePlaceholder: {
-      width: 100, 
-      height: 50, 
-      color: "#FFFFFF",
+      width: 150, // Set a fixed width
+      height: 150, // Set a fixed height
+      backgroundColor: '#E0E0E0', // A light grey color
+      justifyContent: 'center', // Center the content vertically
+      alignItems: 'center', // Center the content horizontally
+      borderRadius: 10, // Rounded corners
+      marginVertical: 20, // Some vertical margin
+    },
+    uploadText: {
+      color: '#171C24', // Dark text color
+      textAlign: 'center',
+    },
+    uploadedImage: {
+      width: '100%', // Take full width of the container
+      height: '100%', // Take full height of the container
+      borderRadius: 10, // Maintain the same borderRadius as the container
     },
     input: {
-        backgroundColor: '#8FA3C8',
+        backgroundColor: '#FFFFFF',
         padding: 10,
         marginVertical: 4,
         marginHorizontal: 4,
-        width: '35%',
+        width: '70%',
         borderRadius: 5,
     },
     inputLarge: {
-        backgroundColor: '#8FA3C8',
+        backgroundColor: '#FFFFFF',
         padding: 10,
-        marginVertical: 4,
+        marginVertical: 50,
         marginHorizontal: 4,
-        width: '35%',
+        width: '70%',
+        height: 150,
         borderRadius: 5,
     },
     step1: {
@@ -145,7 +147,7 @@ const styles = StyleSheet.create({
       margin: 20,
     },
     item: {
-      backgroundColor: '#8FA3C8',
+      backgroundColor: '#FFFFFF',
       padding: 10,
       marginVertical: 4,
       marginHorizontal: 4,
@@ -153,7 +155,7 @@ const styles = StyleSheet.create({
       borderRadius: 5,
     },
     itemSelected: {
-      backgroundColor: '#000',
+      backgroundColor: '#DD0000',
       padding: 20,
       marginVertical: 8,
       marginHorizontal: 16,
@@ -167,7 +169,7 @@ const styles = StyleSheet.create({
     },
     button: {
       marginTop: 20, 
-      backgroundColor: '#8FA3C8', 
+      backgroundColor: '#FFFFFF', 
       padding: 10,
       borderRadius: 5,
       width: '80%', 
@@ -177,7 +179,7 @@ const styles = StyleSheet.create({
       alignSelf: 'center',  
     },
     buttonText: {
-      color: '#171C24', 
+      color: '#333333', 
       fontSize: 16, 
       fontWeight: 'bold',
     },

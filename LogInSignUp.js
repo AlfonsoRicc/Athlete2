@@ -1,44 +1,58 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Image, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 const LogInSignUp = () => {
   const navigation = useNavigation(); 
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isButtonEnabled, setButtonEnabled] = useState(false);
+
+  const validateEmail = (email) => {
+    const re = /\S+@\S+\.\S+/;
+    return re.test(email);
+  };
+
+  const handleEmailChange = (text) => {
+    setEmail(text);
+    setPassword(text);
+    setButtonEnabled(validateEmail(text));
+  };
 
   const handleCreateAccountPress = () => {
+    if (isButtonEnabled) {
+      console.log('Button Pressed with Valid Email');
     navigation.navigate('LetsBegin');
   };
+}
 
   return (
     <View style={styles.container}>
       <View style={styles.topBar}>
         <Image 
-          source={require('./assets/logo.png')}
+          source={require('./assets/AthleteLogo.png')}
           style={styles.logo}
         />
         </View>
         <View style={styles.textWrapper}>
-      <Text style={styles.textPrimary}>Create an account
+      <Text style={styles.textPrimary}>Show Your Moves Without Fear
       </Text>
-      <Text style={styles.subtitle}>Noosk is the place where you can share your knowledge, crafts or skills </Text>
+      <Text style={styles.subtitle}>Athlete is the place where you can be yourself </Text>
       </View>
       <TextInput
         style={styles.input}
         placeholder="Enter your email"
         keyboardType="email-address"
+        onChangeText={handleEmailChange}
       />
       <TextInput
         style={styles.input}
         placeholder="Choose a password"
-        secureTextEntry={true}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Confirm your password"
-        secureTextEntry={true}
-      />
+        keyboardType='password'
+        onChangeText={handleEmailChange}
+        />
       <TouchableOpacity style={styles.button} onPress={handleCreateAccountPress}>
-      <Text style={styles.buttonText}>Create Your Account</Text>
+      <Text style={styles.buttonText}>Show Your Moves</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.smallButton} onPress={() => { navigation.navigate('Home') }}>
         <Text style={styles.smallButtonText}>Back</Text>
@@ -50,7 +64,7 @@ const LogInSignUp = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#D4CCC1',
     alignItems: 'center',
     justifyContent: 'flex-start',
     paddingTop: 10,
@@ -58,30 +72,32 @@ const styles = StyleSheet.create({
   topBar: {
     width: '100%', 
     paddingVertical: 10, 
-    backgroundColor: '#FFFFFF', 
+    backgroundColor: '#D4CCC1', 
     alignItems: 'center', 
   },
   logo: {
-    width: 100, 
-    height: 50, 
+    width: 200, 
+    height: 100, 
     resizeMode: 'contain', 
   },
   textWrapper: {
-    padding: 10,
-    margin: 0,
-    paddingTop: 50,
+    width: '100%',
+    padding: 20,
+    marginTop: 30,
+    marginBottom: 15,
   },
   textPrimary: {
     fontSize: 35,
     color: "#171C24",
     fontWeight: 'bold',
-    textAlign: 'left',
+    textAlign: 'center',
   },
   subtitle: {
     fontSize: 16,
     color: '#171C24',
-    textAlign: 'left',
-    paddingTop: 20
+    textAlign: 'center',
+    paddingTop: 20,
+    paddingHorizontal: 15,
   },
   input: {
     height: 40,
@@ -94,14 +110,14 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 20, 
-    backgroundColor: '#171C24', 
+    backgroundColor: '#DD0000', 
     padding: 10,
     borderRadius: 5,
     width: '80%', 
     alignItems: 'center', 
   },
   buttonText: {
-    color: '#54D7B7', 
+    color: '#333333', 
     fontSize: 16, 
     fontWeight: 'bold',
   },
@@ -112,7 +128,7 @@ const styles = StyleSheet.create({
     alignItems: 'center', 
   },
   smallButtonText: {
-    color: '#171C24', 
+    color: '#333333', 
     fontSize: 14,
   },
 });

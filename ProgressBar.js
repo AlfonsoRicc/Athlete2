@@ -32,10 +32,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 5, // Spacing between dots
   },
   active: {
-    backgroundColor: '#000', // Active dot color
+    backgroundColor: '#DD0000', // Active dot color
   },
   inactive: {
-    backgroundColor: '#CCC', // Inactive dot color
+    backgroundColor: '#333333', // Inactive dot color
   },
 });
 

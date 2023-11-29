@@ -10,24 +10,30 @@ const WorkHistory = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
 
-  const categories = [ { id: 'sports', name: 'Sports' },
-  { id: 'arts_crafts', name: 'Arts and Crafts' },
-  { id: 'gaming', name: 'Gaming'  },
-  { id: 'culinary_arts', name: 'Culinary Arts' }, 
-  { id: 'travel', name: 'Travel' }, 
-  { id: 'contentCreation', name: 'Content Creation' }, 
-  { id: 'collecting', name: 'Collecting' }, 
-  { id: 'strategy_games', name: 'Strategy Games' },
-  { id: 'outdoor_nature', name: 'Outdoors'},
+  const categories = [ { id: '>18', name: '>18' },
+  { id: '19_22', name: '19-22' },
+  { id: '23_29', name: '23-29'  },
+  { id: '30_39', name: '30-39' }, 
+  { id: '40_49', name: '40-49' }, 
+  { id: '50_59', name: '50-59' }, 
+  { id: '>60', name: '>60' }, 
   ];
 
   const handleContinuePress = () => {navigation.navigate('PersonalInfo')};
 
+
   const handleSelectCategory = (category) => {
+    if (selectedCategories.includes(category)) { 
+      setSelectedCategories(selectedCategories.filter(c => c.id !== category.id));
+    } else {
+      setSelectedCategories([...selectedCategories, category]);
+    }
   };
 
   const handleRemoveCategory = (category) => {
+    setSelectedCategories(selectedCategories.filter(c => c.id !== category.id));
   };
+
 
   const renderItem = ({ item }) => {
     const isSelected = selectedCategories.some(c => c.id === item.id);
@@ -50,19 +56,18 @@ return (
 <View style={styles.container}>
 <View style={styles.topBar}>
   <Image 
-    source={require('./assets/logo.png')}
+    source={require('./assets/AthleteLogo.png')}
     style={styles.logo}
   /> 
 </View>
     <ProgressBar steps={steps} currentStep={currentStep} />
      <Text style={styles.step1}>STEP 2</Text>
       <View style={styles.textWrapper}>
-          <Text style={styles.textPrimary}>Tell Us About Your Work-Life Balance </Text>
-          <Text style={styles.subtitle}>Your life experience and hobbies define you just as much as the work you do</Text>
+          <Text style={styles.textPrimary}>What's your age bracket? </Text>
   </View>
     <TextInput
       style={styles.searchBar}
-      placeholder="Search hobbies and interests"
+      placeholder="e.g. 23-29"
       onChangeText={setSearchTerm}
       value={searchTerm}
       />
@@ -75,8 +80,11 @@ return (
       numColumns={2} 
       style={styles.list}
     />
-      <TouchableOpacity style={styles.button} onPress={handleContinuePress}>
+      <TouchableOpacity style={[styles.button, selectedCategories.length === 0 && styles.buttonDisabled]} onPress={handleContinuePress} disabled={selectedCategories.length === 0}>
         <Text style={styles.buttonText}>Continue</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.smallButton} onPress={() => { navigation.navigate('PersonalInfo') }}>
+        <Text style={styles.smallButtonText}>Skip</Text>
       </TouchableOpacity>
     </View>
   );
@@ -85,7 +93,7 @@ return (
 const styles = StyleSheet.create({
   container: {
       flex: 1,
-      backgroundColor: '#171C24',
+      backgroundColor: '#D4CCC1',
       alignItems: 'center',
       justifyContent: 'flex-start',
       paddingTop: 10,
@@ -94,7 +102,7 @@ const styles = StyleSheet.create({
     topBar: {
       width: '100%', 
       paddingVertical: 10, 
-      backgroundColor: '#171C24', 
+      backgroundColor: '#D4CCC1', 
       alignItems: 'left', 
       marginLeft: 40,
     },
@@ -111,6 +119,7 @@ const styles = StyleSheet.create({
       color: "#FFFFFF",
       fontWeight: 'bold',
       textAlign: 'center',
+      marginBottom: 40,
     },
     subtitle: {
       fontSize: 14,
@@ -137,7 +146,7 @@ const styles = StyleSheet.create({
       width: '100%',
     },
     item: {
-      backgroundColor: '#8FA3C8',
+      backgroundColor: '#FFF',
       padding: 10,
       marginVertical: 4,
       marginHorizontal: 4,
@@ -145,7 +154,7 @@ const styles = StyleSheet.create({
       borderRadius: 5,
     },
     itemSelected: {
-      backgroundColor: '#000',
+      backgroundColor: '#DD0000',
       padding: 20,
       marginVertical: 8,
       marginHorizontal: 16,
@@ -154,24 +163,37 @@ const styles = StyleSheet.create({
       fontSize: 10,
     },
     itemRemoveText: {
-      fontSize: 18,
-      color: 'red',
+      fontSize: 14,
+      color: '#171C24',
+      textAlign: 'right',
     },
     button: {
       marginTop: 20, 
-      backgroundColor: '#8FA3C8', 
+      backgroundColor: '#DD0000', 
       padding: 10,
       borderRadius: 5,
       width: '80%', 
       alignItems: 'center',
       position: 'absolute', 
-      bottom: 50, 
+      bottom: 60, 
       alignSelf: 'center',  
     },
     buttonText: {
-      color: '#171C24', 
+      color: '#333333', 
       fontSize: 16, 
       fontWeight: 'bold',
+    },
+    smallButton: {
+      marginTop: 10,
+      padding: 5,
+      width: '80%', 
+      alignItems: 'center', 
+      bottom: 20, 
+    },
+    smallButtonText: {
+      color: '#DD0000', 
+      fontSize: 14,
+      fontWeight: 'bold'
     },
   })
 

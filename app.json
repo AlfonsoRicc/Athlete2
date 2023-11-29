@@ -15,12 +15,15 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
-    },
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "This app would like to access your photo library."
+    }
+  },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#ffffff",
       }
     },
     "web": {

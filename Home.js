@@ -20,36 +20,17 @@ return (
     <View style={styles.container}>
       <View style={styles.topBar}>
         <Image 
-          source={require('./assets/logo.png')}
+          source={require('./assets/AthleteLogo.png')}
           style={styles.logo}
         />
         </View>
       <View style={styles.textWrapper}>
-      <Text style={styles.textPrimary}>Noosk is a place where you can inspire with your knowledge,
+      <Text style={styles.textPrimary}>Athlete is a place where you can share your sports skills,
       </Text>
-      <Text style={styles.textSecondary}>Finally</Text>
-      <Text style={styles.subtitle}>We built a place where knowledgeable people can have an impact </Text>
+      <Text style={styles.textSecondary}>without stress</Text>
+      <Text style={styles.subtitle}>We built a place where you can feel comfortable being goofy </Text>
       </View>
-      <CustomButton title="Continue with email" />
-      <View style={styles.lineContainer}>
-      <View style={styles.line} />
-       <Text style={styles.textTertiary}>or</Text>
-       <View style={styles.line} />
-      </View>
-      <View style={styles.authButtons}>
-        <TouchableOpacity onPress={handleAppleLogin}>
-          <Image 
-            source={require('./assets/Frame162.png')} 
-            style={styles.appleButtonImage}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={handleGoogleLogin}>
-          <Image 
-            source={require('./assets/Frame160.png')} 
-            style={styles.googleButtonImage}
-          />
-        </TouchableOpacity>
-      </View>
+      <CustomButton title="Share Your 'Skills'" />
       <View style={styles.footer}>
         <TouchableOpacity onPress={() => navigation.navigate('Login')}>
           <Text style={styles.loginText}>
@@ -70,7 +51,7 @@ return (
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#171C24',
+    backgroundColor: '#DD0000',
     alignItems: 'center',
     justifyContent: 'flex-start',
     paddingTop: 30,
@@ -78,12 +59,12 @@ const styles = StyleSheet.create({
   topBar: {
     width: '100%', 
     paddingVertical: 10, 
-    backgroundColor: '#171C24', 
+    backgroundColor: '#DD0000', 
     alignItems: 'center', 
   },
   logo: {
-    width: 100, 
-    height: 50, 
+    width: 200, 
+    height: 100, 
     resizeMode: 'contain', 
   },
   textWrapper: {
@@ -112,7 +93,7 @@ const styles = StyleSheet.create({
   },
   textSecondary: {
     fontSize: 35,
-    color: "#54D7B7", 
+    color: "#333333", 
     fontWeight: '500',
     textAlign: 'center',
   },
@@ -122,7 +103,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 16,
-    color: '#647189',
+    color: '#D4CCC1',
     textAlign: 'center',
     paddingTop: 40
   },
@@ -153,7 +134,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: '#171C24',
+    backgroundColor: '#D4CCC1',
     padding: 40, 
     alignItems: 'left',
     padding: 40, 
@@ -164,7 +145,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   loginLink: {
-    color: '#54D7B7', 
+    color: '#DD0000', 
     fontWeight: 'bold',
   },
   termsText: {
@@ -174,11 +155,11 @@ const styles = StyleSheet.create({
     textAlign: 'left', 
   },
   termsLink: {
-    color: '#54D7B7', 
+    color: '#DD0000', 
     fontWeight: 'bold',
   },
   privacyLink: {
-    color: '#54D7B7', 
+    color: '#DD0000', 
     fontWeight: 'bold',
   },
 });
