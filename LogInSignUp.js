@@ -8,21 +8,25 @@ const LogInSignUp = () => {
   const [password, setPassword] = useState('');
   const [isButtonEnabled, setButtonEnabled] = useState(false);
 
-  const validateEmail = (email) => {
-    const re = /\S+@\S+\.\S+/;
-    return re.test(email);
-  };
+  // const validateEmail = (email) => {
+    // const re = /\S+@\S+\.\S+/;
+    // return re.test(email);
+  // };
 
   const handleEmailChange = (text) => {
     setEmail(text);
-    setPassword(text);
-    setButtonEnabled(validateEmail(text));
+    setButtonEnabled(text);
   };
+
+  const handlePasswordChange = (text) => {
+    setPassword(text);
+    setButtonEnabled(text);
+  }
 
   const handleCreateAccountPress = () => {
     if (isButtonEnabled) {
       console.log('Button Pressed with Valid Email');
-    navigation.navigate('LetsBegin');
+    navigation.navigate('Home');
   };
 }
 
@@ -35,9 +39,9 @@ const LogInSignUp = () => {
         />
         </View>
         <View style={styles.textWrapper}>
-      <Text style={styles.textPrimary}>Show Your Moves Without Fear
+      <Text style={styles.textPrimary}>Meet People With Your Same Passion
       </Text>
-      <Text style={styles.subtitle}>Athlete is the place where you can be yourself </Text>
+      <Text style={styles.subtitle}>Athlete allows you to form communities based on your athletic skills </Text>
       </View>
       <TextInput
         style={styles.input}
@@ -49,12 +53,12 @@ const LogInSignUp = () => {
         style={styles.input}
         placeholder="Choose a password"
         keyboardType='password'
-        onChangeText={handleEmailChange}
+        onChangeText={handlePasswordChange}
         />
       <TouchableOpacity style={styles.button} onPress={handleCreateAccountPress}>
-      <Text style={styles.buttonText}>Show Your Moves</Text>
+      <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.smallButton} onPress={() => { navigation.navigate('Home') }}>
+      <TouchableOpacity style={styles.smallButton} onPress={() => { navigation.navigate('Verification') }}>
         <Text style={styles.smallButtonText}>Back</Text>
       </TouchableOpacity>
         </View>

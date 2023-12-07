@@ -60,7 +60,7 @@ const FieldsOfExpertise = () => {
         <Text style={styles.itemText}>{item.name}</Text>
         {isSelected && (
           <TouchableOpacity onPress={() => handleRemoveCategory(item)}>
-            <Text style={styles.itemRemoveText}>X</Text>
+            <Text style={styles.itemRemoveText}></Text>
           </TouchableOpacity>
         )}
       </TouchableOpacity>
@@ -94,7 +94,7 @@ return (
       )}
       renderItem={renderItem}
       keyExtractor={(item) => item.id}
-      numColumns={2} 
+      numColumns={3} 
       style={styles.list}
     />
       <TouchableOpacity style={[styles.button, selectedCategories.length === 0 && styles.buttonDisabled]} onPress={handleContinuePress} disabled={selectedCategories.length === 0}>
@@ -120,9 +120,10 @@ const styles = StyleSheet.create({
       alignItems: 'left', 
     },
     logo: {
-      width: 100, 
-      height: 50, 
+      width: 200, 
+      height: 100, 
       resizeMode: 'contain', 
+      marginLeft: 100,
     },
     textWrapper: {
       width: "80%",
@@ -162,7 +163,7 @@ const styles = StyleSheet.create({
       padding: 10,
       marginVertical: 4,
       marginHorizontal: 4,
-      width: '35%',
+      width: '30%',
       borderRadius: 5,
     },
     itemSelected: {
@@ -170,7 +171,7 @@ const styles = StyleSheet.create({
       padding: 10,
       marginVertical: 4,
       marginHorizontal: 4,
-      width: '35%',
+      width: '30%',
       borderRadius: 5,
     },
     itemText: {

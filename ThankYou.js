@@ -6,8 +6,12 @@ const ThankYou = () => {
   const navigation = useNavigation();
 
   const handlePollPress = () => {
-    navigation.navigate('Poll');
+    navigation.navigate('PersonalInfo');
   };
+
+  const handleNoThanksPress = () => {
+    navigation.navigate('Home');
+  }
 
   return (
     <View style={styles.container}>
@@ -17,16 +21,22 @@ const ThankYou = () => {
      style={styles.logo}/> 
     </View>
       <Text style={styles.thankYouText}>
-        Thank you for sharing your knowledge!
+        Thank you for sharing your skills!
       </Text>
       <Text style={styles.invitationText}>
-        Would you like to share your forecast in our weekly poll?
+        Would you like to create a Profile?
       </Text>
       <TouchableOpacity 
         style={styles.button} 
         onPress={handlePollPress}
       >
-        <Text style={styles.buttonText}>Go to Poll</Text>
+        <Text style={styles.buttonText}>Create Profile</Text>
+      </TouchableOpacity>
+      <TouchableOpacity 
+        style={styles.button} 
+        onPress={handleNoThanksPress}
+      >
+        <Text style={styles.buttonText}>No, Thank You</Text>
       </TouchableOpacity>
     </View>
   );
@@ -61,6 +71,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#333333', 
     padding: 10,
     borderRadius: 5,
+    marginBottom: 30,
   },
   buttonText: {
     color: 'white',

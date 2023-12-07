@@ -7,7 +7,7 @@ const CustomButton = ({ title, onPress, navigateTo }) => {
 
   const handlePress = () => {
     console.log('Button pressed!');
-      navigation.navigate('LogInSignUp');
+      navigation.navigate('FieldsOfExpertise');
     }
 
   return (
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 25,
     borderRadius: 4,
     alignItems: 'center',
-    marginVertical: 10,
+    marginLeft: 20,
   },
   text: {
     color: '#333333',

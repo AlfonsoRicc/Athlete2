@@ -1,76 +1,96 @@
 import React, { useState } from 'react';
-import { View, Image, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Image, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import ProgressBar from './ProgressBar';
+import * as ImagePicker from 'expo-image-picker';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const PersonalInfo = () => {
   const navigation = useNavigation(); 
   const steps = ['Step 1', 'Step 2', 'Step 3', 'Step 4', 'Step 5']; 
-  const currentStep = 3;
+  const currentStep = 4;
     
-  const [firstName, setFirstName] = useState('');
+const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [bio, setBio] = useState('');
     const [image, setImage] = useState(null);
 
   const handleContinuePress = () => {navigation.navigate('Verification')};
 
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
+  const deleteImage = () => {
+    setImage(null); // Set to null instead of an empty string to signify no image
+  };
 
-    if (!result.cancelled) {
-      setImage(result.uri);
+  const pickImage = async () => {
+    try {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+  
+      if (!result.cancelled) {
+        setImage(result.uri);
+      }
+    } catch (error) {
+      console.error("Error picking media: ", error);
     }
   };
 
 
-return (
-<View style={styles.container}>
-<View style={styles.topBar}>
-  <Image 
+  return (
+    <ScrollView style={styles.scrollView}>
+      <View style={styles.container}>
+      <Image 
     source={require('./assets/AthleteLogo.png')}
     style={styles.logo}
   /> 
-</View>
-    <ProgressBar steps={steps} currentStep={currentStep} />
-     <Text style={styles.step1}>STEP 3</Text>
-      <View style={styles.textWrapper}>
+        <ProgressBar steps={steps} currentStep={currentStep} />
+        <Text style={styles.step1}>STEP 4</Text>
+
+        <View style={styles.textWrapper}>
           <Text style={styles.textPrimary}>Share Something About Yourself</Text>
-  </View>
-  <View style={styles.imagePlaceholder}>
-  <TouchableOpacity onPress={pickImage}>
-          <Text>Upload Image</Text>
-        </TouchableOpacity>
-        {image && <Image source={{ uri: image }} style={{ width : 100, height: 100 }} />}
+        </View>
+
+      <View style={styles.imageContainer}>
+        {image && <Image source={{ uri: image }} style={styles.uploadedImage} />}
+        {!image && (
+          <TouchableOpacity onPress={pickImage} style={styles.uploadButton}>
+            <Icon name='camera' color={'#333333'} size={48} />
+          </TouchableOpacity>
+        )}
       </View>
-      <TextInput 
-        style={styles.input}
-        value={firstName}
-        onChangeText={setFirstName}
-        placeholder="First Name"
-      />
-      <TextInput 
-        style={styles.input}
-        value={lastName}
-        onChangeText={setLastName}
-        placeholder="Last Name"
-      />
-      <TextInput
-        style={styles.inputLarge}
-        value={bio}
-        onChangeText={setBio}
-        placeholder="Significant work experiences (optional)"
-        multiline
-      />
-      <TouchableOpacity style={styles.button} onPress={handleContinuePress}>
-        <Text style={styles.buttonText}>Continue</Text>
-      </TouchableOpacity>
-    </View>
+      
+      {image && (
+        <TouchableOpacity onPress={deleteImage} style={styles.deleteButton}>
+          <Text style={styles.deleteButtonText}>Delete Image</Text>
+        </TouchableOpacity>
+      )}
+        <TextInput 
+          style={styles.input}
+          value={firstName}
+          onChangeText={setFirstName}
+          placeholder="First Name"
+        />
+        <TextInput 
+          style={styles.input}
+          value={lastName}
+          onChangeText={setLastName}
+          placeholder="Last Name"
+        />
+        <TextInput
+          style={styles.inputLarge}
+          value={bio}
+          onChangeText={setBio}
+          placeholder="Share a fun fact (optional)"
+          multiline
+        />
+        <TouchableOpacity style={styles.button} onPress={handleContinuePress}>
+          <Text style={styles.buttonText}>Continue</Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
   );
 };
 
@@ -80,24 +100,10 @@ const styles = StyleSheet.create({
       backgroundColor: '#D4CCC1',
       alignItems: 'center',
       justifyContent: 'flex-start',
-      paddingTop: 10,
       alignItems: 'center',
-    },
-    topBar: {
-      width: '100%', 
-      backgroundColor: '#D4CCC1', 
-      alignItems: 'left', 
-    },
-    logo: {
-      width: 200, 
-      height: 100, 
-      resizeMode: 'contain', 
     },
     textWrapper: {
       width: "80%",
-    },
-    placeholder: {
-      color: "#FFFFFF"
     },
     textPrimary: {
       fontSize: 20,
@@ -105,14 +111,20 @@ const styles = StyleSheet.create({
       fontWeight: 'bold',
       textAlign: 'center',
     },
-    imagePlaceholder: {
-      width: 150, // Set a fixed width
-      height: 150, // Set a fixed height
+    logo: {
+      width: 200, 
+      height: 100, 
+      resizeMode: 'contain', 
+      alignItems: 'center',
+    },
+    imageContainer: {
+      width: 200, // Set a fixed width
+      height: 200, // Set a fixed height
       backgroundColor: '#E0E0E0', // A light grey color
       justifyContent: 'center', // Center the content vertically
       alignItems: 'center', // Center the content horizontally
       borderRadius: 10, // Rounded corners
-      marginVertical: 20, // Some vertical margin
+      marginVertical: 10, // Some vertical margin
     },
     uploadText: {
       color: '#171C24', // Dark text color
@@ -139,6 +151,7 @@ const styles = StyleSheet.create({
         width: '70%',
         height: 150,
         borderRadius: 5,
+        marginBottom: 20,
     },
     step1: {
       fontSize: 12,
@@ -167,6 +180,18 @@ const styles = StyleSheet.create({
       fontSize: 18,
       color: 'red',
     },
+    deleteButton: {
+      backgroundColor: '#DD0000', // Example: red background
+      padding: 5,
+      borderRadius: 5,
+      margin: 10,
+      alignItems: 'center',
+      width: "30%",
+    },
+    deleteButtonText: {
+      color: 'white', 
+      fontSize: 16,
+    },
     button: {
       marginTop: 20, 
       backgroundColor: '#FFFFFF', 
@@ -174,9 +199,8 @@ const styles = StyleSheet.create({
       borderRadius: 5,
       width: '80%', 
       alignItems: 'center',
-      position: 'absolute', 
-      bottom: 50, 
       alignSelf: 'center',  
+      marginBottom: 10,
     },
     buttonText: {
       color: '#333333', 

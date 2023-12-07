@@ -1,20 +1,23 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { View, Text, Image, TouchableOpacity, StyleSheet, } from 'react-native';
+import { View, Text, Image, ScrollView, TouchableOpacity, StyleSheet, } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import CustomButton from './Button';
+import { Video } from 'expo-av';
+import { WebView } from 'react-native-webview';
+
 
 const Home = () => {
   const navigation = useNavigation(); 
 
-    const handleAppleLogin = () => {
-      console.log('Apple Login pressed!');
-      navigation.navigate('LogInSignUp');
-    };
-    const handleGoogleLogin = () => {
-      console.log('Google Login pressed!');
-      navigation.navigate('LogInSignUp');
-    };
+    // const handleAppleLogin = () => {
+      // console.log('Apple Login pressed!');
+      // navigation.navigate('LogInSignUp');
+   //  };
+    // const handleGoogleLogin = () => {
+      // console.log('Google Login pressed!');
+      // navigation.navigate('LogInSignUp');
+    // };
 
 return (
     <View style={styles.container}>
@@ -24,26 +27,22 @@ return (
           style={styles.logo}
         />
         </View>
+        <ScrollView style={styles.scrollViewStyle}>
       <View style={styles.textWrapper}>
       <Text style={styles.textPrimary}>Athlete is a place where you can share your sports skills,
       </Text>
       <Text style={styles.textSecondary}>without stress</Text>
+      <WebView
+        source={{ uri: 'https://youtube.com/shorts/Iqsxzu_CkJk?si=BdUtr34I3QhzJTCk' }} // Replace with your video's URL
+        style={styles.video}
+        resizeMode="contain"
+        shouldPlay={true}
+        isLooping={true}
+      />
       <Text style={styles.subtitle}>We built a place where you can feel comfortable being goofy </Text>
       </View>
       <CustomButton title="Share Your 'Skills'" />
-      <View style={styles.footer}>
-        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-          <Text style={styles.loginText}>
-            Already have an account? <Text style={styles.loginLink}>Log in</Text>
-          </Text>
-        </TouchableOpacity> 
-        <TouchableOpacity onPress={() => navigation.navigate('Privacy Policy')}>
-        <Text style={styles.termsText}>
-          By continuing you agree to our <Text style={styles.termsLink}>Terms and Conditions.</Text> <Text style={styles.privacyLink}>Privacy Policy</Text>
-        </Text>
-        </TouchableOpacity>
-      </View>
-      <StatusBar style="auto" />
+      </ScrollView>
     </View>
   );
 }
@@ -69,8 +68,13 @@ const styles = StyleSheet.create({
   },
   textWrapper: {
     padding: 10,
-    margin: 20,
-    paddingTop: 100,
+    margin: 10,
+    paddingTop: 40,
+  },
+  video: {
+    width: '80%', // You can adjust this width as needed
+    height: 200, // You can adjust this height as needed
+    marginTop: 20, // Add some margin at the top
   },
   lineContainer: {
     flexDirection: 'row',
@@ -113,21 +117,11 @@ const styles = StyleSheet.create({
     width: '100%', 
     marginTop: 15,
   },
-  appleButtonImage: {
-    width: 180,
-    height: 50,
-    resizeMode: 'contain',
-    padding: 10,
-    backgroundColor: 'transparent',
-    borderWidth: 1,
-  },
-  googleButtonImage: {
-    width: 180,
-    height: 50,
-    resizeMode: 'contain',
-    padding: 10,
-    backgroundColor: 'transparent',
-    borderWidth: 1,
+  video: {
+    width: 250,
+    height: 200, 
+    marginTop: 20, 
+    marginLeft: 50,
   },
   footer: {
     position: 'absolute',
@@ -153,14 +147,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginTop: 10, 
     textAlign: 'left', 
-  },
-  termsLink: {
-    color: '#DD0000', 
-    fontWeight: 'bold',
-  },
-  privacyLink: {
-    color: '#DD0000', 
-    fontWeight: 'bold',
   },
 });
 

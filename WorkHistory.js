@@ -19,7 +19,7 @@ const WorkHistory = () => {
   { id: '>60', name: '>60' }, 
   ];
 
-  const handleContinuePress = () => {navigation.navigate('PersonalInfo')};
+  const handleContinuePress = () => {navigation.navigate('ShareKnowledge')};
 
 
   const handleSelectCategory = (category) => {
@@ -44,7 +44,7 @@ const WorkHistory = () => {
         <Text style={styles.itemText}>{item.name}</Text>
         {isSelected && (
           <TouchableOpacity onPress={() => handleRemoveCategory(item)}>
-            <Text style={styles.itemRemoveText}>X</Text>
+            <Text style={styles.itemRemoveText}></Text>
           </TouchableOpacity>
         )}
       </TouchableOpacity>
@@ -65,25 +65,19 @@ return (
       <View style={styles.textWrapper}>
           <Text style={styles.textPrimary}>What's your age bracket? </Text>
   </View>
-    <TextInput
-      style={styles.searchBar}
-      placeholder="e.g. 23-29"
-      onChangeText={setSearchTerm}
-      value={searchTerm}
-      />
       <FlatList
        data={categories.filter(category =>
         category.name.toLowerCase().includes(searchTerm.toLowerCase())
       )}
       renderItem={renderItem}
       keyExtractor={(item) => item.id}
-      numColumns={2} 
+      numColumns={3} 
       style={styles.list}
     />
       <TouchableOpacity style={[styles.button, selectedCategories.length === 0 && styles.buttonDisabled]} onPress={handleContinuePress} disabled={selectedCategories.length === 0}>
         <Text style={styles.buttonText}>Continue</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.smallButton} onPress={() => { navigation.navigate('PersonalInfo') }}>
+      <TouchableOpacity style={styles.smallButton} onPress={() => { navigation.navigate('ShareKnowledge') }}>
         <Text style={styles.smallButtonText}>Skip</Text>
       </TouchableOpacity>
     </View>
@@ -104,12 +98,12 @@ const styles = StyleSheet.create({
       paddingVertical: 10, 
       backgroundColor: '#D4CCC1', 
       alignItems: 'left', 
-      marginLeft: 40,
     },
     logo: {
-      width: 100, 
-      height: 50, 
+      width: 200, 
+      height: 100, 
       resizeMode: 'contain', 
+      marginLeft: 100,
     },
     textWrapper: {
       width: "80%",
@@ -150,17 +144,19 @@ const styles = StyleSheet.create({
       padding: 10,
       marginVertical: 4,
       marginHorizontal: 4,
-      width: '35%',
+      width: '30%',
       borderRadius: 5,
     },
     itemSelected: {
       backgroundColor: '#DD0000',
-      padding: 20,
-      marginVertical: 8,
-      marginHorizontal: 16,
+      padding: 10,
+      marginVertical: 4,
+      marginHorizontal: 4,
+      width: '30%', 
+      borderRadius: 5,
     },
     itemText: {
-      fontSize: 10,
+      fontSize: 14,
     },
     itemRemoveText: {
       fontSize: 14,
